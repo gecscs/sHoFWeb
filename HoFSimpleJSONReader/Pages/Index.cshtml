@@ -69,11 +69,6 @@
 
 
 </div>
-@* 
-<!-- Play Button inside Fancybox -->
-<div id="playButton" style="display:none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.6); padding: 10px 20px; color: white; border-radius: 5px;">
-    <button id="playButtonInFancybox">Play</button>
-</div> *@
 
 
 @section Scripts
@@ -91,21 +86,6 @@
 
     <script>
 
-        oldJsonList = @Html.Raw(Model.OldJsonList);
-        newJsonList = @Html.Raw(Model.NewJsonList);
-
-        function DetectLikeVariations(oldList, newList){
-
-          newList.forEach(function(item){
-              oldItem = oldList.find(x => x.id == item.id);
-              var variation = item.body.favoritesCount - oldItem.body.favoritesCount;
-              console.log("item " + item.id + " var = " + variation);
-
-              $("")
-          });
-
-        }
-
         $(document).ready(function() {
             // Initialize Fancybox
             Fancybox.bind("[data-fancybox]", {
@@ -115,9 +95,6 @@
                 }
             });  
             
-            //console.log(oldJsonList);
-            //console.log(newJsonList);
-            //DetectLikeVariations(oldJsonList, newJsonList);
 
             $("#OrderType").on('change', function(){
                 var selectedValue = $(this).val();

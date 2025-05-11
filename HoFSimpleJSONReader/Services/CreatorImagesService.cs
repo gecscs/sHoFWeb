@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace HoFSimpleJSONReader.Services
 {
-    public class CreatorImagesService
+    public class CreatorImagesService : ICreatorImagesService
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ServiceSettings _settings;
@@ -58,6 +58,29 @@ namespace HoFSimpleJSONReader.Services
             }
 
             return refreshedList;
+        }
+
+        public async Task<List<ScreenshotItem>?> GetUpdatedImagesStats2Async()
+        {
+            List<ScreenshotItem> shots = new List<ScreenshotItem> ();
+
+            var fullUrl = $"{_settings.BaseUrl.TrimEnd('/')}/{_settings.CreatorImagesEndPoint.TrimStart('/')}";
+            var client = _httpClientFactory.CreateClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, fullUrl);
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+
+                shots = JsonSerializer.Deserialize<List<ScreenshotItem>>(content, new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+            }
+
+            return shots;
         }
     }
 }

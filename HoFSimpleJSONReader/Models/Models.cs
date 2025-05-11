@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HoFSimpleJSONReader.Models
 {
-    public class ConnObj
-    {
-        public string Id { get; set; }
-        public int Status { get; set; }
-        public ScreenshotItem Body { get; set; }
-    }
-
     public class ScreenshotItem
     {
+        [Key]
         public string Id { get; set; }
         public bool IsApproved { get; set; }
         public bool IsReported { get; set; }
@@ -21,15 +17,17 @@ namespace HoFSimpleJSONReader.Models
         public int ViewsCount { get; set; }
         public double ViewsPerDay { get; set; }
         public string CityName { get; set; }
-        public object CityNameLocale { get; set; }
-        public object CityNameLatinized { get; set; }
-        public object CityNameTranslated { get; set; }
+        public string? CityNameLocale { get; set; }
+        public string? CityNameLatinized { get; set; }
+        public string? CityNameTranslated { get; set; }
         public int CityMilestone { get; set; }
         public int CityPopulation { get; set; }
         public string ImageUrlThumbnail { get; set; }
         public string ImageUrlFHD { get; set; }
         public string ImageUrl4K { get; set; }
+        [NotMapped]
         public List<int> ParadoxModIds { get; set; }
+        [NotMapped]
         public RenderSettings RenderSettings { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CreatedAtFormatted { get; set; }
@@ -37,8 +35,20 @@ namespace HoFSimpleJSONReader.Models
         public string CreatorId { get; set; }
         public Creator Creator { get; set; }
         public bool Favorited { get; set; }
+        [NotMapped]
         public int FavoritesVariation { get; set; } = 0;
+        [NotMapped]
         public int ViewsVariation { get; set; } = 0;
+    }
+
+    public class ScreenshotDataPoint
+    {
+        [Key]
+        public Guid ScreenshotScreenshotDataPointId { get; set; } = Guid.NewGuid();
+        public string Id { get; set; }
+        public int Favorites { get; set; } = 0;
+        public int Views { get; set; } = 0;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 
     public class RenderSettings
@@ -83,11 +93,15 @@ namespace HoFSimpleJSONReader.Models
         public string Id { get; set; }
         public string CreatorName { get; set; }
         public string CreatorNameSlug { get; set; }
-        public object CreatorNameLocale { get; set; }
-        public object CreatorNameLatinized { get; set; }
-        public object CreatorNameTranslated { get; set; }
+        public string? CreatorNameLocale { get; set; }
+        public string? CreatorNameLatinized { get; set; }
+        public string? CreatorNameTranslated { get; set; }
         public DateTime CreatedAt { get; set; }
+        [NotMapped]
         public object Social { get; set; }
+
+        // Coleção de itens relacionados (opcional)
+        public ICollection<ScreenshotItem> ScreenshotItems { get; set; }
     }
 
     public class CreatorStats
