@@ -1,0 +1,190 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@section TopBar
+{
+        <div class="row g-30">
+            <div class="col-auto text-start">
+                Screenshots: @Model.Stats.ScreenshotsCount | Views: @Model.Stats.ViewsCount | Favorites: @Model.Stats.FavoritesCount
+            </div>
+            <div class="col-auto text-end">
+                <form id="orderForm" method="post">
+                    <div class="row">
+                    
+                        <div class="col-auto">
+                            <select asp-for="OrderType" class="form-select">
+                                <option value="mostRecent">Most recent</option>
+                                <option value="mostLiked">Most Liked</option>
+                                <option value="likesDay">Most Likes p/day</option>
+                                <option value="likesPercent">Best Like/View %</option>
+                                <option value="viewsDay">Most Views p/day</option>
+                                <option value="mostViews">Most Views total</option>
+                                <option value="largestVariation">Largest Likes Variation</option>
+                                <option value="largestViewsVariation">Largest Views Variation</option>
+                            </select>
+                        </div>
+                        <div class="col-auto" style="display:none;">
+                            <button type="submit" class="btn btn-primary">renew</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
+}
+
+
+<div class="text-center">
+
+    @if (Model.Shots != null && Model.Shots.Any())
+    {
+        <ul id="screenshots" class="row list-unstyled g-3 gallery">
+            @foreach (var item in Model.Shots)
+            {
+                <li id="@item.Id" data-variation="@item.FavoritesVariation" data-viewsvariation="@item.ViewsVariation" data-created="@item.CreatedAt.ToString("yyyy-MM-dd HH:mm:sss")" data-favorites="@item.FavoritesCount" data-favoritesday="@item.FavoritesPerDay" data-favoritespercent="@item.FavoritingPercentage" data-viewsday="@item.ViewsPerDay" data-viewstotal="@item.ViewsCount" class="col-md-4">
+                    <div class="card h-100 shadow-sm">
+                        <a href="@item.ImageUrlFHD" data-fancybox="gallery" data-caption="@item.CityName <br /><h2>@item.FavoritesCount / @item.ViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></h2>posted at:  @item.CreatedAtFormatted">
+                            <img src="@item.ImageUrlThumbnail" class="card-img-top img-fluid rounded" alt="@item.CityName" />
+                        </a>
+
+                        <div class="card-body">
+                            <h5 class="card-title">@item.CityName</h5>
+                            <p class="card-text">
+                                <h2>@item.FavoritesCount / @item.ViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></h2>
+                                @item.CreatedAtFormatted
+                            </p>
+                        </div>
+
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Nenhum dado encontrado.</p>
+    }
+
+
+</div>
+@* 
+<!-- Play Button inside Fancybox -->
+<div id="playButton" style="display:none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.6); padding: 10px 20px; color: white; border-radius: 5px;">
+    <button id="playButtonInFancybox">Play</button>
+</div> *@
+
+
+@section Scripts
+{
+    <!-- Include Fancybox CSS -->
+    <link href="~/fancybox/fancybox.css" rel="stylesheet" />
+    <!-- Include Fancybox JS -->
+    <script src="~/fancybox/fancybox.js"></script>
+
+    <style>
+        ul.row > li {
+            display: flex;
+        }
+    </style>
+
+    <script>
+
+        oldJsonList = @Html.Raw(Model.OldJsonList);
+        newJsonList = @Html.Raw(Model.NewJsonList);
+
+        function DetectLikeVariations(oldList, newList){
+
+          newList.forEach(function(item){
+              oldItem = oldList.find(x => x.id == item.id);
+              var variation = item.body.favoritesCount - oldItem.body.favoritesCount;
+              console.log("item " + item.id + " var = " + variation);
+
+              $("")
+          });
+
+        }
+
+        $(document).ready(function() {
+            // Initialize Fancybox
+            Fancybox.bind("[data-fancybox]", {
+                Slideshow: {
+                    playOnStart: false,
+                    timeout: 5000
+                }
+            });  
+            
+            //console.log(oldJsonList);
+            //console.log(newJsonList);
+            //DetectLikeVariations(oldJsonList, newJsonList);
+
+            $("#OrderType").on('change', function(){
+                var selectedValue = $(this).val();
+                var $ul = $('#screenshots');
+                var $lis = $ul.children('li');
+
+                switch(selectedValue){
+                    case "mostRecent":
+                        $lis.sort(function (a, b) {
+                          let dateA = new Date($(a).data('created'));
+                          let dateB = new Date($(b).data('created'));
+                          return dateB - dateA; // descending: most recent first
+                        });
+                        $lis.detach().appendTo($ul);
+                        break;
+                    case "mostLiked":
+                        $lis.sort(function (a, b) {
+                            return $(b).data('favorites') - $(a).data('favorites');
+                        });
+                        // Append the sorted LIs back to the UL (this moves them in the DOM)
+                        $lis.detach().appendTo($ul);                        
+                        break;
+                    case "likesDay":
+                        $lis.sort(function (a, b) {
+                            return $(b).data('favoritesday') - $(a).data('favoritesday');
+                        });
+                        // Append the sorted LIs back to the UL (this moves them in the DOM)
+                        $lis.detach().appendTo($ul);
+                        break;
+                    case "likesPercent":
+                        $lis.sort(function (a, b) {
+                            return $(b).data('favoritespercent') - $(a).data('favoritespercent');
+                        });
+                        // Append the sorted LIs back to the UL (this moves them in the DOM)
+                        $lis.detach().appendTo($ul);
+                        break;
+                    case "viewsDay":
+                        $lis.sort(function (a, b) {
+                            return $(b).data('viewsday') - $(a).data('viewsday');
+                        });
+                        // Append the sorted LIs back to the UL (this moves them in the DOM)
+                        $lis.detach().appendTo($ul);
+                        break;
+                    case "mostViews":
+                        $lis.sort(function (a, b) {
+                            return $(b).data('viewstotal') - $(a).data('viewstotal');
+                        });
+                        // Append the sorted LIs back to the UL (this moves them in the DOM)
+                        $lis.detach().appendTo($ul);
+                        break;
+                    case "largestVariation":
+                        $lis.sort(function (a, b) {
+                            return $(b).data('variation') - $(a).data('variation');
+                        });
+                        // Append the sorted LIs back to the UL (this moves them in the DOM)
+                        $lis.detach().appendTo($ul);
+                        break;
+                    case "largestViewsVariation":
+                        $lis.sort(function (a, b) {
+                            return $(b).data('viewsvariation') - $(a).data('viewsvariation');
+                        });
+                        // Append the sorted LIs back to the UL (this moves them in the DOM)
+                        $lis.detach().appendTo($ul);
+                        break;
+                }
+            });
+
+        });        
+    </script>
+}
