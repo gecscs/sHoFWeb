@@ -7,7 +7,7 @@
     "favoritesPerDay": 0.6,
     "favoritingPercentage": 10,
     "viewsCount": 61,
-    "viewsPerDay": 5.7,
+    "viewsPerDay": 5.6,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -304,7 +304,7 @@
     "favoritesPerDay": 0.5,
     "favoritingPercentage": 8,
     "viewsCount": 61,
-    "viewsPerDay": 5.8,
+    "viewsPerDay": 5.6,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -601,7 +601,7 @@
     "favoritesPerDay": 0.5,
     "favoritingPercentage": 8,
     "viewsCount": 61,
-    "viewsPerDay": 5.8,
+    "viewsPerDay": 5.6,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -898,7 +898,7 @@
     "favoritesPerDay": 0.4,
     "favoritingPercentage": 7,
     "viewsCount": 61,
-    "viewsPerDay": 5.8,
+    "viewsPerDay": 5.6,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -1195,7 +1195,7 @@
     "favoritesPerDay": 0.5,
     "favoritingPercentage": 8,
     "viewsCount": 61,
-    "viewsPerDay": 5.8,
+    "viewsPerDay": 5.6,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -1492,7 +1492,7 @@
     "favoritesPerDay": 0.6,
     "favoritingPercentage": 10,
     "viewsCount": 61,
-    "viewsPerDay": 5.8,
+    "viewsPerDay": 5.6,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -1789,7 +1789,7 @@
     "favoritesPerDay": 0.7,
     "favoritingPercentage": 11,
     "viewsCount": 70,
-    "viewsPerDay": 6.5,
+    "viewsPerDay": 6.3,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -2082,10 +2082,10 @@
     "id": "680467ff52fc6e05079624f6",
     "isApproved": false,
     "isReported": false,
-    "favoritesCount": 11,
+    "favoritesCount": 12,
     "favoritesPerDay": 0.5,
     "favoritingPercentage": 13,
-    "viewsCount": 87,
+    "viewsCount": 90,
     "viewsPerDay": 4.2,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -2370,8 +2370,8 @@
       "social": {}
     },
     "favorited": false,
-    "favoritesVariation": 0,
-    "viewsVariation": 0
+    "favoritesVariation": 1,
+    "viewsVariation": 3
   },
   {
     "id": "6804674a52fc6e05079624f1",
@@ -4151,7 +4151,7 @@
     "favoritesPerDay": 0.1,
     "favoritingPercentage": 5,
     "viewsCount": 61,
-    "viewsPerDay": 2.5,
+    "viewsPerDay": 2.4,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -4441,7 +4441,7 @@
     "favoritesPerDay": 0.1,
     "favoritingPercentage": 5,
     "viewsCount": 61,
-    "viewsPerDay": 2.5,
+    "viewsPerDay": 2.4,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -4731,7 +4731,7 @@
     "favoritesPerDay": 0.1,
     "favoritingPercentage": 5,
     "viewsCount": 61,
-    "viewsPerDay": 2.5,
+    "viewsPerDay": 2.4,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -5020,7 +5020,7 @@
     "favoritesCount": 3,
     "favoritesPerDay": 0.1,
     "favoritingPercentage": 5,
-    "viewsCount": 61,
+    "viewsCount": 62,
     "viewsPerDay": 2.5,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -5301,7 +5301,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67ff50b2a30882604efd8d6c",
@@ -5310,7 +5310,7 @@
     "favoritesCount": 3,
     "favoritesPerDay": 0.1,
     "favoritingPercentage": 5,
-    "viewsCount": 61,
+    "viewsCount": 62,
     "viewsPerDay": 2.5,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -5591,7 +5591,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67ff509da30882604efd8d69",
@@ -5600,7 +5600,7 @@
     "favoritesCount": 3,
     "favoritesPerDay": 0.1,
     "favoritingPercentage": 5,
-    "viewsCount": 61,
+    "viewsCount": 62,
     "viewsPerDay": 2.5,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -5881,7 +5881,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67ff5088a30882604efd8d68",
@@ -5890,7 +5890,7 @@
     "favoritesCount": 3,
     "favoritesPerDay": 0.1,
     "favoritingPercentage": 5,
-    "viewsCount": 61,
+    "viewsCount": 62,
     "viewsPerDay": 2.5,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -6171,7 +6171,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67ff507ba30882604efd8d65",
@@ -6180,7 +6180,7 @@
     "favoritesCount": 5,
     "favoritesPerDay": 0.2,
     "favoritingPercentage": 8,
-    "viewsCount": 61,
+    "viewsCount": 62,
     "viewsPerDay": 2.5,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -6461,7 +6461,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67ff4fa3a30882604efd8d60",
@@ -6469,8 +6469,8 @@
     "isReported": false,
     "favoritesCount": 4,
     "favoritesPerDay": 0.2,
-    "favoritingPercentage": 7,
-    "viewsCount": 61,
+    "favoritingPercentage": 6,
+    "viewsCount": 62,
     "viewsPerDay": 2.5,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -6751,7 +6751,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67fdd5eca30882604efd811c",
@@ -7929,7 +7929,7 @@
     "favoritesPerDay": 0.2,
     "favoritingPercentage": 10,
     "viewsCount": 73,
-    "viewsPerDay": 2.1,
+    "viewsPerDay": 2,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -9240,10 +9240,10 @@
     "isApproved": false,
     "isReported": false,
     "favoritesCount": 14,
-    "favoritesPerDay": 0.3,
+    "favoritesPerDay": 0.2,
     "favoritingPercentage": 11,
     "viewsCount": 124,
-    "viewsPerDay": 2.3,
+    "viewsPerDay": 2.1,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -11042,7 +11042,7 @@
     "favoritesCount": 26,
     "favoritesPerDay": 0.4,
     "favoritingPercentage": 12,
-    "viewsCount": 213,
+    "viewsCount": 214,
     "viewsPerDay": 3.4,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -11105,17 +11105,17 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67cc1a50a4eec91b50016477",
     "isApproved": false,
     "isReported": false,
-    "favoritesCount": 11,
+    "favoritesCount": 12,
     "favoritesPerDay": 0.2,
-    "favoritingPercentage": 11,
-    "viewsCount": 100,
-    "viewsPerDay": 1.7,
+    "favoritingPercentage": 12,
+    "viewsCount": 102,
+    "viewsPerDay": 1.6,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -11176,8 +11176,8 @@
       "social": {}
     },
     "favorited": false,
-    "favoritesVariation": 0,
-    "viewsVariation": 0
+    "favoritesVariation": 1,
+    "viewsVariation": 2
   },
   {
     "id": "67cc1981a4eec91b50016475",
@@ -11330,7 +11330,7 @@
     "favoritesCount": 26,
     "favoritesPerDay": 0.4,
     "favoritingPercentage": 12,
-    "viewsCount": 209,
+    "viewsCount": 210,
     "viewsPerDay": 3.3,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -11393,7 +11393,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67cc1847a4eec91b50016470",
@@ -11834,7 +11834,7 @@
     "favoritesCount": 6,
     "favoritesPerDay": 0.1,
     "favoritingPercentage": 8,
-    "viewsCount": 78,
+    "viewsCount": 79,
     "viewsPerDay": 1.2,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -11897,7 +11897,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67cbdf1ba4eec91b50016152",
@@ -12050,7 +12050,7 @@
     "favoritesCount": 5,
     "favoritesPerDay": 0.1,
     "favoritingPercentage": 7,
-    "viewsCount": 75,
+    "viewsCount": 76,
     "viewsPerDay": 1.2,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -12113,7 +12113,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67c3579637329e4303de4df2",
@@ -12459,7 +12459,7 @@
     },
     "createdAt": "2025-02-25T01:45:22.5Z",
     "createdAtFormatted": "02/25/2025, 1:45 AM",
-    "createdAtFormattedDistance": "2 months ago",
+    "createdAtFormattedDistance": "3 months ago",
     "creatorId": "66f1e0aed3ece00d437cf33d",
     "creator": {
       "id": "66f1e0aed3ece00d437cf33d",
@@ -13633,8 +13633,8 @@
     "isReported": false,
     "favoritesCount": 16,
     "favoritesPerDay": 0.2,
-    "favoritingPercentage": 11,
-    "viewsCount": 152,
+    "favoritingPercentage": 10,
+    "viewsCount": 153,
     "viewsPerDay": 1.9,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -13697,7 +13697,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "67b517350d8e50d596078def",
@@ -14642,7 +14642,7 @@
     "favoritesCount": 98,
     "favoritesPerDay": 0.8,
     "favoritingPercentage": 13,
-    "viewsCount": 770,
+    "viewsCount": 773,
     "viewsPerDay": 6.3,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -14705,7 +14705,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 3
   },
   {
     "id": "677d571db9abf5e03ddccc9d",
@@ -15290,7 +15290,7 @@
     "favoritesCount": 34,
     "favoritesPerDay": 0.3,
     "favoritingPercentage": 11,
-    "viewsCount": 297,
+    "viewsCount": 298,
     "viewsPerDay": 2.3,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -15353,7 +15353,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "6778ec0b18aee1f6890b0ed7",
@@ -15362,7 +15362,7 @@
     "favoritesCount": 13,
     "favoritesPerDay": 0.1,
     "favoritingPercentage": 10,
-    "viewsCount": 129,
+    "viewsCount": 130,
     "viewsPerDay": 1,
     "cityName": "Calabash",
     "cityNameLocale": null,
@@ -15425,7 +15425,7 @@
     },
     "favorited": false,
     "favoritesVariation": 0,
-    "viewsVariation": 0
+    "viewsVariation": 1
   },
   {
     "id": "6778ebd818aee1f6890b0ed6",
@@ -16800,10 +16800,10 @@
     "isApproved": false,
     "isReported": false,
     "favoritesCount": 21,
-    "favoritesPerDay": 0.2,
+    "favoritesPerDay": 0.1,
     "favoritingPercentage": 10,
     "viewsCount": 214,
-    "viewsPerDay": 1.5,
+    "viewsPerDay": 1.4,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -17307,7 +17307,7 @@
     "favoritesPerDay": 0.2,
     "favoritingPercentage": 11,
     "viewsCount": 330,
-    "viewsPerDay": 2.1,
+    "viewsPerDay": 2,
     "cityName": "Calabash",
     "cityNameLocale": null,
     "cityNameLatinized": null,
@@ -17715,7 +17715,7 @@
     },
     "createdAt": "2024-11-27T05:02:59.687Z",
     "createdAtFormatted": "11/27/2024, 5:02 AM",
-    "createdAtFormattedDistance": "5 months ago",
+    "createdAtFormattedDistance": "6 months ago",
     "creatorId": "66f1e0aed3ece00d437cf33d",
     "creator": {
       "id": "66f1e0aed3ece00d437cf33d",
@@ -17787,7 +17787,7 @@
     },
     "createdAt": "2024-11-27T04:59:26.23Z",
     "createdAtFormatted": "11/27/2024, 4:59 AM",
-    "createdAtFormattedDistance": "5 months ago",
+    "createdAtFormattedDistance": "6 months ago",
     "creatorId": "66f1e0aed3ece00d437cf33d",
     "creator": {
       "id": "66f1e0aed3ece00d437cf33d",
@@ -17859,7 +17859,7 @@
     },
     "createdAt": "2024-11-27T04:10:58.687Z",
     "createdAtFormatted": "11/27/2024, 4:10 AM",
-    "createdAtFormattedDistance": "5 months ago",
+    "createdAtFormattedDistance": "6 months ago",
     "creatorId": "66f1e0aed3ece00d437cf33d",
     "creator": {
       "id": "66f1e0aed3ece00d437cf33d",
@@ -17931,7 +17931,7 @@
     },
     "createdAt": "2024-11-27T03:59:42.838Z",
     "createdAtFormatted": "11/27/2024, 3:59 AM",
-    "createdAtFormattedDistance": "5 months ago",
+    "createdAtFormattedDistance": "6 months ago",
     "creatorId": "66f1e0aed3ece00d437cf33d",
     "creator": {
       "id": "66f1e0aed3ece00d437cf33d",
@@ -21243,7 +21243,7 @@
     },
     "createdAt": "2024-10-27T23:59:30.049Z",
     "createdAtFormatted": "10/27/2024, 11:59 PM",
-    "createdAtFormattedDistance": "6 months ago",
+    "createdAtFormattedDistance": "7 months ago",
     "creatorId": "66f1e0aed3ece00d437cf33d",
     "creator": {
       "id": "66f1e0aed3ece00d437cf33d",

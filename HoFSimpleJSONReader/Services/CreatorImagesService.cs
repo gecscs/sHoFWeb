@@ -22,37 +22,38 @@ namespace HoFSimpleJSONReader.Services
 
             if (baseList.Count > 0)
             {
-                foreach (ScreenshotItem baseShot in baseList) 
+                var fullUrl = $"{_settings.BaseUrl.TrimEnd('/')}/{_settings.CreatorImagesEndPoint.TrimStart('/')}";
+                var client = _httpClientFactory.CreateClient();
+                var request = new HttpRequestMessage(HttpMethod.Get, fullUrl);
+                var response = await client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    
-                    var fullUrl = $"{_settings.BaseUrl.TrimEnd('/')}/{_settings.CreatorImagesEndPoint.TrimStart('/')}";
-                    var client = _httpClientFactory.CreateClient();
-                    var request = new HttpRequestMessage(HttpMethod.Get, fullUrl + "/" + baseShot.Id);
-                    var response = await client.SendAsync(request);
+                    var content = await response.Content.ReadAsStringAsync();
 
-                    if (response.IsSuccessStatusCode)
+                    List<ScreenshotItem> shots = new List<ScreenshotItem>();
+                    shots = JsonSerializer.Deserialize<List<ScreenshotItem>>(content, new JsonSerializerOptions
                     {
-                        var content = await response.Content.ReadAsStringAsync();
+                        PropertyNameCaseInsensitive = true
+                    });
 
-                        ScreenshotItem shot = new ScreenshotItem();
-                        shot = JsonSerializer.Deserialize<ScreenshotItem>(content, new JsonSerializerOptions
+                    if (shots != null)
+                    {
+                        foreach (var shot in shots)
                         {
-                            PropertyNameCaseInsensitive = true
-                        });
+                            ScreenshotItem oldItem = refreshedList.First(c => c.Id == shot.Id);
 
-                        if (shot != null)
-                        {
-                            shot.FavoritesVariation = shot.FavoritesCount - baseShot.FavoritesCount;
-                            shot.ViewsVariation = shot.ViewsCount - baseShot.ViewsCount;
-                            ScreenshotItem oldItem = refreshedList.First(c => c.Id == baseShot.Id);
+                            shot.FavoritesVariation = shot.FavoritesCount - oldItem.FavoritesCount;
+                            shot.ViewsVariation = shot.ViewsCount - oldItem.ViewsCount;
+
                             ScreenshotItem updatedItem = oldItem;
+
                             updatedItem = shot;
                             refreshedList.Remove(oldItem);
                             refreshedList.Add(updatedItem);
                         }
-                    } 
-                    
-                }                
+                    }
+                }
 
             }
 
