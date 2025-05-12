@@ -68,5 +68,10 @@ namespace HoFSimpleJSONReader.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<List<ScreenshotDataPoint>> GetScreenshotDataPointsAsync(string id)
+        {
+            return await _context.ScreenshotDataPoints.Where(c => c.Id == id).OrderBy(c => c.CreatedAt).ToListAsync();
+        }
+
     }
 }

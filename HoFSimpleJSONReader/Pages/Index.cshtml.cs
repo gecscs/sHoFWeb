@@ -56,11 +56,6 @@ namespace HoFSimpleJSONReader.Pages
                 throw;
             }
 
-
-
-
-            
-
         }
     }
 }

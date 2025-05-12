@@ -3,6 +3,8 @@ using HoFSimpleJSONReader.Logging;
 using HoFSimpleJSONReader.Models;
 using HoFSimpleJSONReader.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace HoFSimpleJSONReader.Services
 {
@@ -54,6 +56,30 @@ namespace HoFSimpleJSONReader.Services
             }
 
             return updatedList.OrderByDescending(x => x.CreatedAt).ToList(); ;
+        }
+
+        public async Task<Dictionary<string, List<CanvasJsDatapoint>>> GetScreenshotDataPointsForChartCanvasJs(string id)
+        {
+            List<ScreenshotDataPoint> dps = await _repo.GetScreenshotDataPointsAsync(id);
+            List<CanvasJsDatapoint> viewsCanvasDPs = new List<CanvasJsDatapoint>(); ;
+            List<CanvasJsDatapoint> favoritesCanvasDPs = new List<CanvasJsDatapoint>();
+
+            if (dps != null)
+            {
+                foreach (var dp in dps)
+                {
+                    viewsCanvasDPs.Add(new CanvasJsDatapoint() { x = dp.CreatedAt, y = dp.Views });
+                    favoritesCanvasDPs.Add(new CanvasJsDatapoint() { x = dp.CreatedAt, y = dp.Favorites });
+                }
+            }
+
+            Dictionary<string, List<CanvasJsDatapoint>> dic = new Dictionary<string, List<CanvasJsDatapoint>>()
+            {
+                {"views", viewsCanvasDPs},
+                {"favorites", favoritesCanvasDPs}
+            };
+
+            return dic;
         }
     }
 }

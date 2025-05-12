@@ -51,6 +51,12 @@ namespace HoFSimpleJSONReader.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 
+    public class CanvasJsDatapoint
+    {
+        public DateTime x { get; set; }
+        public int y { get; set; }
+    }
+
     public class RenderSettings
     {
         public double VolumetricCloudsDensityMultiplier { get; set; }
