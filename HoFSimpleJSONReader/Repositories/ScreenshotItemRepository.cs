@@ -23,11 +23,11 @@ namespace HoFSimpleJSONReader.Repositories
             return await _context.Screenshots.ToListAsync();
         }
 
-        public async Task AddOrUpdateScreenshotAsync(ScreenshotItem shot)
+        public async Task AddOrUpdateScreenshotAsync(ScreenshotItem shot, bool scheduled)
         {
             var s = await _context.Screenshots.FirstOrDefaultAsync(c => c.Id == shot.Id);
 
-            if (s != null)
+            if (s != null && !scheduled)
             {
                 s.Favorited = shot.Favorited;
                 s.FavoritesCount = shot.FavoritesCount;

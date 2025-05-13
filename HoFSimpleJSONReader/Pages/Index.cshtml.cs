@@ -31,7 +31,7 @@ namespace HoFSimpleJSONReader.Pages
             _screenshotsProcessor = screenshotsProcessor;
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(bool scheduled = false)
         {
 
             try
@@ -49,7 +49,7 @@ namespace HoFSimpleJSONReader.Pages
 
             try
             {
-                Shots = await _screenshotsProcessor.GetAllScreenshotsFromCreatorAsync();
+                Shots = await _screenshotsProcessor.GetAllScreenshotsFromCreatorAsync(scheduled);
             }
             catch (Exception ex) 
             {

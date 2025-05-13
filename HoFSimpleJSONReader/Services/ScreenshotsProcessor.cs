@@ -22,7 +22,7 @@ namespace HoFSimpleJSONReader.Services
             _repo = repo;
         }
 
-        public async Task<List<ScreenshotItem>> GetAllScreenshotsFromCreatorAsync()
+        public async Task<List<ScreenshotItem>> GetAllScreenshotsFromCreatorAsync(bool scheduled)
         {
             List<ScreenshotItem> dbList = await _repo.GetAllScreenshotsAsync();
             List<ScreenshotItem> updatedList = await _imagesService.GetUpdatedImagesStats2Async();
@@ -33,13 +33,13 @@ namespace HoFSimpleJSONReader.Services
                 {
                     var dbShot = dbList.FirstOrDefault(c => c.Id == updatedShot.Id);
 
-                    if (dbShot != null)
+                    if (dbShot != null && !scheduled)
                     {
                         updatedShot.ViewsVariation = updatedShot.ViewsCount - dbShot.ViewsCount;
                         updatedShot.FavoritesVariation = updatedShot.FavoritesCount - dbShot.FavoritesCount;
                     }
 
-                    await _repo.AddOrUpdateScreenshotAsync(updatedShot);
+                    await _repo.AddOrUpdateScreenshotAsync(updatedShot, scheduled);
 
                     ScreenshotDataPoint newDataPoint = new ScreenshotDataPoint()
                     {
