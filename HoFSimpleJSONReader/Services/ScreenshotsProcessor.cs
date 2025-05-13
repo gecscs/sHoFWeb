@@ -25,7 +25,7 @@ namespace HoFSimpleJSONReader.Services
         public async Task<List<ScreenshotItem>> GetAllScreenshotsFromCreatorAsync(bool scheduled)
         {
             List<ScreenshotItem> dbList = await _repo.GetAllScreenshotsAsync();
-            List<ScreenshotItem> updatedList = await _imagesService.GetUpdatedImagesStats2Async();
+            List<ScreenshotItem> updatedList = await _imagesService.GetUpdatedImagesStatsAsync();
 
             if (dbList != null && updatedList != null)
             {

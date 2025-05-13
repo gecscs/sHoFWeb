@@ -1,6 +1,7 @@
 ﻿@page "{ScreenshotId}"
 @model HoFSimpleJSONReader.Pages.Screenshot.ShotStatisticsModel
 @{
+	ViewData["Title"] = "Screenshot Statistics";
 }
 
 @section TopBar
@@ -43,6 +44,7 @@
 			}));
 
 			var options = {
+				zoomEnabled: true,
 				animationEnabled: true,
 				theme: "light2",
 				title:{
@@ -54,7 +56,7 @@
 				},
 				axisY: {
 					title: "Views/Likes",
-					suffix: "VL",
+					suffix: "",
 					minimum: 0
 				},
 				toolTip:{
@@ -73,7 +75,7 @@
 						showInLegend: true,
 						name: "Views",
 						markerType: "square",
-						xValueFormatString: "DD MMM, YYYY",
+						xValueFormatString: "DD MMM, YYYY HH:mm",
 						xValueType: "dateTime",
 						color: "#F08080",
 						//yValueFormatString: "#,##0",
@@ -83,7 +85,7 @@
 						type: "spline",
 						showInLegend: true,
 						name: "Likes",
-						xValueFormatString: "DD MMM, YYYY",
+						xValueFormatString: "DD MMM, YYYY HH:mm",
 						xValueType: "dateTime",
 						lineDashType: "dash",
 						//yValueFormatString: "#,##0",
