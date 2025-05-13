@@ -114,19 +114,6 @@
             display: flex;
         }
 
-        .canvasjs-chart-canvas {
-            /* position: relative !important; */ /* Ensure the chart layout remains intact */
-            z-index: 10000 !important; /* Chart remains on top */
-            user-select:all;
-            height:500px;
-        }
-
-        /* Allow links and tooltips inside the chart to be interactive */
-        .canvasjs-chart-canvas .canvasjs-chart-toolTip,
-        .canvasjs-chart-canvas a {
-            pointer-events: auto !important; /* Allow interaction with tooltips and links */
-        }
-
         /* Center fancybox content properly */
         #statisticsWrapper {
             display: flex;
@@ -137,19 +124,7 @@
             margin-top: 0;
             margin-bottom: 0;
         }
-
-        /* Prevent interaction with chart background elements */
-        .statistics {
-            pointer-events: none !important; /* Disable interaction with background content */
-        }
-
-        /* Enable interaction for the chart container itself */
-        #chartContainer {
-            pointer-events: auto !important; /* Enable interaction with chart */
-        }
-
-        .canvasjs-chart-tooltip{top:40px;}
-
+        
     </style>
 
     <script>
@@ -246,12 +221,11 @@
 
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
     <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+
     <script>
 
-
         function GetShotStats(shotId) {
-
-            
+                        
             var url = '/Index?handler=GetShotDataPoints&id=' + shotId;
 
             // Clear stage
@@ -300,7 +274,7 @@
                     minimum: 0
                 },
                 toolTip:{
-                    shared:true,
+                    shared:true
                 },
                 legend:{
                     cursor:"pointer",
@@ -315,7 +289,7 @@
                         showInLegend: true,
                         name: "Views",
                         markerType: "square",
-                        xValueFormatString: "DD MMM, YYYY",
+                        xValueFormatString: "DD MMM, YYYY HH:mm",
                         xValueType: "dateTime",
                         color: "#F08080",
                         //yValueFormatString: "#,##0",
@@ -325,7 +299,7 @@
                         type: "spline",
                         showInLegend: true,
                         name: "Likes",
-                        xValueFormatString: "DD MMM, YYYY",
+                            xValueFormatString: "DD MMM, YYYY HH:mm",
                         xValueType: "dateTime",
                         lineDashType: "dash",
                         //yValueFormatString: "#,##0",
