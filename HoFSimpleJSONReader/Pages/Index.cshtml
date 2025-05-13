@@ -7,7 +7,7 @@
 @section TopBar
 {
         <div class="row g-30">
-            <div class="col-auto text-start">
+            <div class="col-auto text-start text" style="margin-top:10px;height:30px;">
                 Screenshots: @Model.Stats.ScreenshotsCount | Views: @Model.Stats.ViewsCount | Favorites: @Model.Stats.FavoritesCount
             </div>
             <div class="col-auto text-end">
@@ -45,17 +45,20 @@
             {
                 <li id="@item.Id" data-variation="@item.FavoritesVariation" data-viewsvariation="@item.ViewsVariation" data-created="@item.CreatedAt.ToString("yyyy-MM-dd HH:mm:sss")" data-favorites="@item.FavoritesCount" data-favoritesday="@item.FavoritesPerDay" data-favoritespercent="@item.FavoritingPercentage" data-viewsday="@item.ViewsPerDay" data-viewstotal="@item.ViewsCount" class="col-md-4">
                     <div class="card h-100 shadow-sm">
-                        <a href="@item.ImageUrlFHD" data-fancybox="gallery" data-caption="@item.CityName <br /><h2>@item.FavoritesCount / @item.ViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></h2>posted at:  @item.CreatedAtFormatted">
+                        <a class="img-shot" href="@item.ImageUrlFHD" title="show image in slideshow" data-fancybox="gallery" data-caption="@item.CityName <br /><h2>@item.FavoritesCount / @item.ViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></h2>posted at:  @item.CreatedAtFormatted">
                             <img src="@item.ImageUrlThumbnail" class="card-img-top img-fluid rounded" alt="@item.CityName" />
                         </a>
 
-                        <div class="card-body">
-                            <h5 class="card-title">@item.CityName</h5>
-                            <p class="card-text">
-                                <h2><a class="stats" href="Screenshot/ShotStatistics/@item.Id" target="_blank" title="see shot statistics"> @item.FavoritesCount / @item.ViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></a></h2>
-                                @item.CreatedAtFormatted
-                            </p>
-                        </div>
+                        <a class="stats" data-id="@item.Id" title="see image statistics">
+                            <div class="card-body">
+                                <h5 class="card-title">@item.CityName</h5>
+                                <p class="card-text">
+                                    @* <h2><a class="stats" href="Screenshot/ShotStatistics/@item.Id" target="_blank" title="see image statistics"> @item.FavoritesCount / @item.ViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></a></h2> *@
+                                    <h2> @item.FavoritesCount / @item.ViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></h2>
+                                    @item.CreatedAtFormatted
+                                </p>
+                            </div>
+                        </a>
 
                     </div>
                 </li>
@@ -70,6 +73,12 @@
 
 </div>
 
+<div id="statistics" class="text-start" style="display:none;background-color:white;">
+    <div id="statisticsWrapper" class="fancybox-inner-wrapper" style="background-color:white;">
+        <div id="chartContainer" style="height: 500px; width: 90%;background-color:white;"></div>
+    </div>
+</div>
+
 
 @section Scripts
 {
@@ -82,10 +91,65 @@
         a.stats {
             text-decoration: none;
             color: black;
+            cursor: pointer;
         }
+
+        a.stats:hover{background-color:#999999;}
+
+        a.img-shot {
+            overflow: hidden; /* Ensures that the image doesn't overflow the container */
+            display: inline-block; /* Adjusts the div to fit the image's size */
+        }
+
+        a.img-shot img {
+            transition: transform 0.3s ease; /* Smooth transition for the scaling effect */
+            width: 100%; /* Ensure image takes up the full width of the container */
+        }
+
+        a.img-shot:hover img {
+            transform: scale(1.2); /* Scales the image by 20% when hovered */
+        }
+
         ul.row > li {
             display: flex;
         }
+
+        .canvasjs-chart-canvas {
+            /* position: relative !important; */ /* Ensure the chart layout remains intact */
+            z-index: 10000 !important; /* Chart remains on top */
+            user-select:all;
+            height:500px;
+        }
+
+        /* Allow links and tooltips inside the chart to be interactive */
+        .canvasjs-chart-canvas .canvasjs-chart-toolTip,
+        .canvasjs-chart-canvas a {
+            pointer-events: auto !important; /* Allow interaction with tooltips and links */
+        }
+
+        /* Center fancybox content properly */
+        #statisticsWrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* Ensures centering */
+            width: 70vw;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        /* Prevent interaction with chart background elements */
+        .statistics {
+            pointer-events: none !important; /* Disable interaction with background content */
+        }
+
+        /* Enable interaction for the chart container itself */
+        #chartContainer {
+            pointer-events: auto !important; /* Enable interaction with chart */
+        }
+
+        .canvasjs-chart-tooltip{top:40px;}
+
     </style>
 
     <script>
@@ -97,8 +161,7 @@
                     playOnStart: false,
                     timeout: 5000
                 }
-            });  
-            
+            });              
 
             $("#OrderType").on('change', function(){
                 var selectedValue = $(this).val();
@@ -166,6 +229,124 @@
                 }
             });
 
+            $(".stats").on("click", function(){
+                GetShotStats($(this).data("id"));
+
+                Fancybox.show([
+                    {
+                        src: "#statistics",
+                        type: "inline"
+                    }
+                ]);
+
+            });
+
         });        
     </script>
+
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+    <script>
+
+
+        function GetShotStats(shotId) {
+
+            
+            var url = '/Index?handler=GetShotDataPoints&id=' + shotId;
+
+            // Clear stage
+            $("#chartContainer").empty();
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                success: function(data) {
+                    ShowStatistics(data)
+                }
+            });
+
+        }
+
+        function ShowStatistics(data){
+
+            //console.log(data); // JSON expected
+
+            let viewsDPs = [];
+            let favoritesDPs = [];
+
+            viewsDPs = data.views.map(item => ({
+                x: new Date(item.x), // Important: Convert ISO string to Date object
+                y: item.y
+            }));
+
+            favoritesDPs = data.favorites.map(item => ({
+                x: new Date(item.x), // Important: Convert ISO string to Date object
+                y: item.y
+            }));
+
+            var options = {
+                animationEnabled: true,
+                theme: "light2",
+                title:{
+                    text: "Screenshot views/likes over time"
+                },
+                axisX:{
+                    valueFormatString: "DD MMM YYYY",
+                    xValueType: "dateTime"
+                },
+                axisY: {
+                    title: "Views/Likes",
+                    suffix: "VL",
+                    minimum: 0
+                },
+                toolTip:{
+                    shared:true,
+                },
+                legend:{
+                    cursor:"pointer",
+                    verticalAlign: "bottom",
+                    horizontalAlign: "left",
+                    dockInsidePlotArea: false,
+                    itemclick: toogleDataSeries
+                },
+                data: [
+                    {
+                        type: "spline",
+                        showInLegend: true,
+                        name: "Views",
+                        markerType: "square",
+                        xValueFormatString: "DD MMM, YYYY",
+                        xValueType: "dateTime",
+                        color: "#F08080",
+                        //yValueFormatString: "#,##0",
+                        dataPoints: viewsDPs
+                    },
+                    {
+                        type: "spline",
+                        showInLegend: true,
+                        name: "Likes",
+                        xValueFormatString: "DD MMM, YYYY",
+                        xValueType: "dateTime",
+                        lineDashType: "dash",
+                        //yValueFormatString: "#,##0",
+                        dataPoints: favoritesDPs
+
+                    }
+                ]
+            }
+
+            $("#chartContainer").CanvasJSChart(options);
+
+            function toogleDataSeries(e){
+                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else{
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+            }
+        }
+        
+    </script>
+
 }

@@ -31,8 +31,10 @@ namespace HoFSimpleJSONReader.Services
             var response = await client.SendAsync(request);
 
             if (!response.IsSuccessStatusCode)
+            {
                 _customLogger.CustomInfo("Error attempting to access the Creator Stats");
                 return null;
+            }
 
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<CreatorStats>(content, new JsonSerializerOptions

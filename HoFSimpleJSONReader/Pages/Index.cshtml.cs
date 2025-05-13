@@ -37,7 +37,8 @@ namespace HoFSimpleJSONReader.Pages
             try
             {
                 Stats = new CreatorStats();
-                //Stats = await _statsService.GetCreatorStatsAsync();
+                
+                Stats = await _statsService.GetCreatorStatsAsync();
 
             }
             catch (Exception ex) 
@@ -56,6 +57,12 @@ namespace HoFSimpleJSONReader.Pages
                 throw;
             }
 
+        }
+
+        public async Task<JsonResult> OnGetGetShotDataPoints(string id)
+        {
+            Dictionary<string, List<CanvasJsDatapoint>> dic = await _screenshotsProcessor.GetScreenshotDataPointsForChartCanvasJs(id);
+            return new JsonResult(dic);
         }
     }
 }
