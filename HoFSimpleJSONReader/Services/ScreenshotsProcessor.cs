@@ -66,7 +66,7 @@ namespace HoFSimpleJSONReader.Services
 
             if (dps != null)
             {
-                foreach (var dp in dps)
+                foreach (var dp in dps.OrderBy(c => c.CreatedAt))
                 {
                     viewsCanvasDPs.Add(new CanvasJsDatapoint() { x = dp.CreatedAt, y = dp.Views });
                     favoritesCanvasDPs.Add(new CanvasJsDatapoint() { x = dp.CreatedAt, y = dp.Favorites });
