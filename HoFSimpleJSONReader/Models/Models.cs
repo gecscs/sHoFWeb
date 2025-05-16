@@ -127,6 +127,7 @@ namespace HoFSimpleJSONReader.Models
         public string SingleImageEndPoint { get; set; }
         public string CreatorImagesEndPoint { get; set; }
         public string AuthorizationToken { get; set; }
+        public string CreatorId { get; set; }
     }
 
 }

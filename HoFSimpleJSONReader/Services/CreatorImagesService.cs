@@ -20,7 +20,7 @@ namespace HoFSimpleJSONReader.Services
         {
             List<ScreenshotItem> shots = new List<ScreenshotItem> ();
 
-            var fullUrl = $"{_settings.BaseUrl.TrimEnd('/')}/{_settings.CreatorImagesEndPoint.TrimStart('/')}";
+            var fullUrl = $"{_settings.BaseUrl.TrimEnd('/')}/{_settings.CreatorImagesEndPoint.TrimStart('/')}{_settings.CreatorId}";
             var client = _httpClientFactory.CreateClient();
             var request = new HttpRequestMessage(HttpMethod.Get, fullUrl);
             var response = await client.SendAsync(request);
