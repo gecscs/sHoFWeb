@@ -7,7 +7,36 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\ImportDatapoints.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\ImportDatapoints.cshtml" />
+    <Content Remove="wwwroot\data\data.json" />
+    <Content Remove="wwwroot\data\data_2025-05-01_220113.json" />
+    <Content Remove="wwwroot\data\data_2025-05-01_223530.json" />
+    <Content Remove="wwwroot\data\data_2025-05-01_223902.json" />
+    <Content Remove="wwwroot\data\data_2025-05-01_224126.json" />
+    <Content Remove="wwwroot\data\data_2025-05-01_224353.json" />
+    <Content Remove="wwwroot\data\data_2025-05-01_224717.json" />
+    <Content Remove="wwwroot\data\data_2025-05-01_224807.json" />
+    <Content Remove="wwwroot\data\data_2025-05-03_090500.json" />
+    <Content Remove="wwwroot\data\shots.json" />
+    <Content Remove="wwwroot\data\shots_2025-05-10_234416.json" />
+    <Content Remove="wwwroot\data\shots_2025-05-11_072053.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Fancybox" Version="2.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.4" />
+    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="8.2.0" />
   </ItemGroup>
   
   <ItemGroup>
@@ -15,5 +44,9 @@
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </None>
 </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="wwwroot\data\" />
+  </ItemGroup>
 
 </Project>
