@@ -374,3 +374,5 @@ FodyWeavers.xsd
 /HoFSimpleJSONReader/wwwroot/data/shots_2025-05-10_234416.json
 /HoFSimpleJSONReader/Pages/ImportDatapoints.cshtml
 /HoFSimpleJSONReader/Pages/ImportDatapoints.cshtml.cs
+/HoFSimpleJSONReader/wwwroot/data/data.json
+/HoFSimpleJSONReader/wwwroot/data/shots.json
