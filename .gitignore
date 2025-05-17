@@ -376,3 +376,4 @@ FodyWeavers.xsd
 /HoFSimpleJSONReader/Pages/ImportDatapoints.cshtml.cs
 /HoFSimpleJSONReader/wwwroot/data/data.json
 /HoFSimpleJSONReader/wwwroot/data/shots.json
+/HoFSimpleJSONReader/appsettings.Development.json

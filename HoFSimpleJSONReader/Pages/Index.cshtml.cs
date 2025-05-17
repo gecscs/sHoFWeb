@@ -36,6 +36,8 @@ namespace HoFSimpleJSONReader.Pages
 
             try
             {
+                //_customLogger.CustomInfo("This is a test");
+
                 Stats = new CreatorStats();
                 
                 Stats = await _statsService.GetCreatorStatsAsync();

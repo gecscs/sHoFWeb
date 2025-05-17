@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using Serilog.Events;
 using Serilog.Parsing;
+using Serilog.Sinks.MSSqlServer;
 
 namespace HoFSimpleJSONReader.Logging
 {
@@ -8,17 +9,22 @@ namespace HoFSimpleJSONReader.Logging
     {
         private readonly Serilog.ILogger _logger;
 
-
         public CustomLogger(IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("LogDbConnection");
 
+            var sinkOptions = new MSSqlServerSinkOptions
+            {
+                TableName = "CustomLogs",
+                AutoCreateSqlTable = true
+            };
+
             _logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
                 .WriteTo.MSSqlServer(
                     connectionString: connectionString,
-                    tableName: "CustomLogs",
-                    autoCreateSqlTable: true,
-                    restrictedToMinimumLevel: LogEventLevel.Information
+                    sinkOptions: sinkOptions,
+                    restrictedToMinimumLevel: LogEventLevel.Verbose
                 )
                 .CreateLogger();
         }
@@ -30,14 +36,14 @@ namespace HoFSimpleJSONReader.Logging
 
         public void CustomInfo(string message, IDictionary<string, object> properties)
         {
-            var logEvent = new LogEvent(DateTimeOffset.Now, LogEventLevel.Information,
-                null,
-                new MessageTemplate(message, new List<MessageTemplateToken>()),
-                properties.Select(p => new LogEventProperty(p.Key, new ScalarValue(p.Value)))
-            );
+            // Usar ForContext com chave-valor
+            var contextLogger = _logger;
+            foreach (var prop in properties)
+            {
+                contextLogger = contextLogger.ForContext(prop.Key, prop.Value);
+            }
 
-            _logger.Write(logEvent);
+            contextLogger.Information(message);
         }
-
     }
 }

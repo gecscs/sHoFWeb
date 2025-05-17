@@ -62,7 +62,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 // Middleware to capture all unexpected errors and log them
-//app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

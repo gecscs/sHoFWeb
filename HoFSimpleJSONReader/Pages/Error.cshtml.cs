@@ -8,9 +8,9 @@ namespace HoFSimpleJSONReader.Pages
     [IgnoreAntiforgeryToken]
     public class ErrorModel : PageModel
     {
-        public string? RequestId { get; set; }
+        public string? TraceId { get; set; }
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public bool ShowTraceId => !string.IsNullOrEmpty(TraceId);
 
         private readonly ILogger<ErrorModel> _logger;
 
@@ -21,7 +21,7 @@ namespace HoFSimpleJSONReader.Pages
 
         public void OnGet()
         {
-            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            TraceId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
         }
     }
 

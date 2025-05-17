@@ -22,7 +22,7 @@ namespace HoFSimpleJSONReader.Logging.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HoFSimpleJSONReader.Logging.LogEntry", b =>
+            modelBuilder.Entity("HoFSimpleJSONReader.Logging.CustomLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,41 +59,47 @@ namespace HoFSimpleJSONReader.Logging.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LogEntry");
-
-                    b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("HoFSimpleJSONReader.Logging.CustomLog", b =>
-                {
-                    b.HasBaseType("HoFSimpleJSONReader.Logging.LogEntry");
-
                     b.ToTable("CustomLogs", (string)null);
                 });
 
             modelBuilder.Entity("HoFSimpleJSONReader.Logging.ErrorLog", b =>
                 {
-                    b.HasBaseType("HoFSimpleJSONReader.Logging.LogEntry");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Exception")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LogEvent")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MessageTemplate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Properties")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("TimeStamp")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
 
                     b.ToTable("ErrorLogs", (string)null);
-                });
-
-            modelBuilder.Entity("HoFSimpleJSONReader.Logging.CustomLog", b =>
-                {
-                    b.HasOne("HoFSimpleJSONReader.Logging.LogEntry", null)
-                        .WithOne()
-                        .HasForeignKey("HoFSimpleJSONReader.Logging.CustomLog", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HoFSimpleJSONReader.Logging.ErrorLog", b =>
-                {
-                    b.HasOne("HoFSimpleJSONReader.Logging.LogEntry", null)
-                        .WithOne()
-                        .HasForeignKey("HoFSimpleJSONReader.Logging.ErrorLog", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

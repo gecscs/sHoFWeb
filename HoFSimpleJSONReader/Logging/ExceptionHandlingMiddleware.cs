@@ -1,25 +1,28 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace HoFSimpleJSONReader.Logging
 {
+    
+
     public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+        private readonly Serilog.ILogger _logger;
         private readonly IWebHostEnvironment _env;
 
         public ExceptionHandlingMiddleware(RequestDelegate next,
-                                           ILogger<ExceptionHandlingMiddleware> logger,
+                                           Serilog.ILogger logger,
                                            IWebHostEnvironment env)
         {
             _next = next;
-            _logger = logger;
+            _logger = logger.ForContext<ExceptionHandlingMiddleware>();
             _env = env;
         }
 
         public async Task Invoke(HttpContext context)
         {
-            var traceId = Guid.NewGuid().ToString(); // opcional, mas útil
+            var traceId = Guid.NewGuid().ToString();
 
             try
             {
@@ -28,38 +31,56 @@ namespace HoFSimpleJSONReader.Logging
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Unhandled exception | TraceId: {TraceId}", traceId);
+                _logger.Error(ex, "Unhandled exception | TraceId: {TraceId}", traceId);
 
-                context.Response.StatusCode = 500;
-                context.Response.ContentType = "application/json";
+                // Verifica se é uma chamada JSON/AJAX
+                var isJson = IsJsonRequest(context.Request);
 
-                object response;
-                if (_env.IsDevelopment())
+                if (isJson)
                 {
-                    response = (new
+                    context.Response.StatusCode = 500;
+                    context.Response.ContentType = "application/json";
+
+                    var response = _env.IsDevelopment()
+                        ? new ErrorResponse
+                        {
+                            Error = "Erro interno no servidor.",
+                            TraceId = traceId,
+                            Exception = ex.Message,
+                            StackTrace = ex.StackTrace
+                        }
+                        : new ErrorResponse
+                        {
+                            Error = "Ocorreu um erro inesperado.",
+                            TraceId = traceId
+                        };
+
+                    var options = new JsonSerializerOptions
                     {
-                        error = "Erro interno no servidor.",
-                        traceId,
-                        exception = ex.Message,
-                        stackTrace = ex.StackTrace
-                    });
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+                    };
+
+                    var json = JsonSerializer.Serialize(response, options);
+
+                    await context.Response.WriteAsync(json);
                 }
                 else
                 {
-                    response = (new
-                    {
-                        error = "Ocorreu um erro inesperado.",
-                        traceId
-                    });
+                    // Redireciona para /Error (a página Razor)
+                    context.Response.Redirect($"/Error?traceId={traceId}");
                 }
-
-                var json = JsonSerializer.Serialize(response, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                });
-
-                await context.Response.WriteAsync(json);
             }
         }
+
+        private bool IsJsonRequest(HttpRequest request)
+        {
+            // Deteta se a chamada foi via API/AJAX
+            var acceptHeader = request.Headers["Accept"].ToString();
+            var isAjax = request.Headers["X-Requested-With"] == "XMLHttpRequest";
+
+            return acceptHeader.Contains("application/json", StringComparison.OrdinalIgnoreCase) || isAjax;
+        }
     }
+
 }
