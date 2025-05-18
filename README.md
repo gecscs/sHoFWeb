@@ -35,7 +35,7 @@
         <li>Most views per day;</li>
         <li>Most total views;</li>
         <li>Largest likes variation since your last visit<sup>1</sup>;</li>
-        <li>Largest likes variation since your last visit<sup>1</sup>;</li>
+        <li>Largest views variation since your last visit<sup>1</sup>;</li>
       </ul>
     </li>
     <li>Show an interactive line graph/chart with the image's views and likes progression over time (can suppress each line individually and can zoom in and pan on chart for enhanced detail);</li>
