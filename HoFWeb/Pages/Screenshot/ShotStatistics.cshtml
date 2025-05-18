@@ -1,0 +1,111 @@
+@page "{ScreenshotId}"
+@model HoFWeb.Pages.Screenshot.ShotStatisticsModel
+@{
+	ViewData["Title"] = "Screenshot Statistics";
+}
+
+@section TopBar
+{
+        @* <div class="row g-30">
+            <div class="col-auto text-start">
+                Screenshots: @Model.Stats.ScreenshotsCount | Views: @Model.Stats.ViewsCount | Favorites: @Model.Stats.FavoritesCount
+            </div>
+            
+        </div> *@
+}
+
+
+<div class="text-center">
+
+	<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
+</div>
+
+
+@section Scripts
+{
+	<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+	<script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+    <script>
+
+        $(document).ready(function() {
+
+			views = @Html.Raw(Model.Views);
+			favorites = @Html.Raw(Model.Favorites);
+
+			viewsDPs = views.map(item => ({
+				x: new Date(item.x), // Important: Convert ISO string to Date object
+				y: item.y
+			}));
+
+			favoritesDPs = favorites.map(item => ({
+				x: new Date(item.x), // Important: Convert ISO string to Date object
+				y: item.y
+			}));
+
+			var options = {
+				zoomEnabled: true,
+				animationEnabled: true,
+				theme: "light2",
+				title:{
+					text: "Screenshot views/likes over time"
+				},
+				axisX:{
+					valueFormatString: "DD MMM YYYY",
+					xValueType: "dateTime"
+				},
+				axisY: {
+					title: "Views/Likes",
+					suffix: "",
+					minimum: 0
+				},
+				toolTip:{
+					shared:true
+				},
+				legend:{
+					cursor:"pointer",
+					verticalAlign: "bottom",
+					horizontalAlign: "left",
+					dockInsidePlotArea: false,
+					itemclick: toogleDataSeries
+				},
+				data: [
+					{
+						type: "spline",
+						showInLegend: true,
+						name: "Views",
+						markerType: "square",
+						xValueFormatString: "DD MMM, YYYY HH:mm",
+						xValueType: "dateTime",
+						color: "#F08080",
+						//yValueFormatString: "#,##0",
+						dataPoints: viewsDPs
+					},
+					{
+						type: "spline",
+						showInLegend: true,
+						name: "Likes",
+						xValueFormatString: "DD MMM, YYYY HH:mm",
+						xValueType: "dateTime",
+						lineDashType: "dash",
+						//yValueFormatString: "#,##0",
+						dataPoints: favoritesDPs
+					
+					}
+				]
+			};
+			
+			$("#chartContainer").CanvasJSChart(options);
+
+			function toogleDataSeries(e){
+				if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+					e.dataSeries.visible = false;
+				} else{
+					e.dataSeries.visible = true;
+				}
+				e.chart.render();
+			}
+
+        });        
+    </script>
+}
