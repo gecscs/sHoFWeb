@@ -1,5 +1,5 @@
 
-# <h1>Hall of Fame Creator Stats Website </h1>
+# <h1>Cities: Skylines 2 - Hall of Fame Creator Stats Website</h1>
 ## <h2>Description</h2>
 <p>This website intends to provide a way to navigate or slideshow your Cities: Skylines II images captured by the excelent mod created by Toverux outside of the game itself, as well as provide stats about them.</p>
 
@@ -21,7 +21,7 @@
         <li>City name;</li>
         <li>Total likes;</li>
         <li>Total views;</li>
-        <li>Likes and views variation since you last refeshed or visited the page<sup>1</sup>;</li>
+        <li>Likes and views variation since you last refeshed or visited the page<sup>(1)</sup>;</li>
         <li>Date of the image submission to Hall of Fame</li>
       </ul>
     </li>
@@ -34,23 +34,23 @@
         <li>Best relation between likes and views;</li>
         <li>Most views per day;</li>
         <li>Most total views;</li>
-        <li>Largest likes variation since your last visit<sup>1</sup>;</li>
-        <li>Largest views variation since your last visit<sup>1</sup>;</li>
+        <li>Largest likes variation since your last visit<sup>(1)</sup>;</li>
+        <li>Largest views variation since your last visit<sup>(1)</sup>;</li>
       </ul>
     </li>
     <li>Show an interactive line graph/chart with the image's views and likes progression over time (can suppress each line individually and can zoom in and pan on chart for enhanced detail);</li>
   </ul>
 
-  <sub><sup>1</sup> The website stores datapoints on a local database for all images on each page load or refresh, and also for the particular image when the requested to see its stats chart. This datapoint collection allows for the stats to be shown on charts and help calculating the likes and views variation since your last visit. For more datails refer to the section <strong>How it works</strong>.<sub>
+  <sub><sup>(1)</sup> The website stores datapoints on a local database for all images on each page load or refresh, and also for the particular image when the requested to see its stats chart. This datapoint collection allows for the stats to be shown on charts and help calculating the likes and views variation since your last visit. For more datails refer to the section <strong>How it works</strong>.<sub>
 </p>
 
 ## <h2>How to use it</h2>
 <p>Clicking an image thumbnail on the list will bring up a larger version of it along with the usual image navigation and slideshow functionalites.</p>
-<p>Pressing the data below each thumbnail will bring up a chart showing the views and likes progression over time of the image.<sup>2</sup></p>
+<p>Pressing the data below each thumbnail will bring up a chart showing the views and likes progression over time of the image.<sup>(2)</sup></p>
 <p>Dragging over an area of the chart will zoom in the selected portion of the data. You can then use the pan button on the top right hand of the chart to switch the zooming functionality to panning, allowing you to navigate the chart when zoomed.</p>
 <p>You can reset the zoom at any time by pressing the button next to the panning/zoom switch button.</p>
 <p>Views and Likes lines can individually be hidden/shown by pressing the matching labels on the bottom left hand of the chart.<p>
-<sub><sup>2</sup> <small>Each time a chart is opened, it also stores and individual datapoint, so if you leave the page opened for some time, the views and likes count presented on the list may differ from the ones being presented as current on the chart, since its using freshly updated data as opposed to the data used on the list that was gathered when you loaded/refreshed the page.</sub>
+<sub><sup>(2)</sup> <small>Each time a chart is opened, it also stores and individual datapoint, so if you leave the page opened for some time, the views and likes count presented on the list may differ from the ones being presented as current on the chart, since its using freshly updated data as opposed to the data used on the list that was gathered when you loaded/refreshed the page.</sub>
 
 ## <h2>How it works</h2>
 ### <h3>Basic principles</h3>
