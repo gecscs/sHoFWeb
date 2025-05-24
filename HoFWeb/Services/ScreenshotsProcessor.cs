@@ -45,12 +45,12 @@ namespace HoFWeb.Services
                     }
 
                     // Correct API data
-                    TimeSpan dateDifferencial = updatedShot.CreatedAt - DateTime.UtcNow;
+                    TimeSpan dateDifferencial = DateTime.UtcNow - updatedShot.CreatedAt;
                     double daysPast = dateDifferencial.TotalDays;
 
-                    updatedShot.FavoritesPerDay = updatedShot.FavoritesCount / daysPast;
-                    updatedShot.FavoritingPercentage = updatedShot.FavoritesCount / updatedShot.ViewsCount;
-                    updatedShot.ViewsPerDay = updatedShot.ViewsCount / daysPast;
+                    updatedShot.FavoritesPerDay = (double)updatedShot.FavoritesCount / daysPast;
+                    updatedShot.FavoritingPercentage = (double)updatedShot.FavoritesCount / (double)updatedShot.ViewsCount;
+                    updatedShot.ViewsPerDay = (double)updatedShot.ViewsCount / daysPast;
 
                     // Insert or Update shot data in the database
                     await _repo.AddOrUpdateScreenshotAsync(updatedShot, scheduled);
