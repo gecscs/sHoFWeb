@@ -38,7 +38,21 @@ namespace HoFWeb.Services
                         updatedShot.ViewsVariation = updatedShot.ViewsCount - dbShot.ViewsCount;
                         updatedShot.FavoritesVariation = updatedShot.FavoritesCount - dbShot.FavoritesCount;
                     }
+                    else
+                    {
+                        updatedShot.ViewsVariation = updatedShot.ViewsCount;
+                        updatedShot.FavoritesVariation = updatedShot.FavoritesCount;
+                    }
 
+                    // Correct API data
+                    TimeSpan dateDifferencial = updatedShot.CreatedAt - DateTime.UtcNow;
+                    double daysPast = dateDifferencial.TotalDays;
+
+                    updatedShot.FavoritesPerDay = updatedShot.FavoritesCount / daysPast;
+                    updatedShot.FavoritingPercentage = updatedShot.FavoritesCount / updatedShot.ViewsCount;
+                    updatedShot.ViewsPerDay = updatedShot.ViewsCount / daysPast;
+
+                    // Insert or Update shot data in the database
                     await _repo.AddOrUpdateScreenshotAsync(updatedShot, scheduled);
 
                     ScreenshotDataPoint newDataPoint = new ScreenshotDataPoint()
