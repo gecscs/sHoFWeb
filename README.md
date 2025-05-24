@@ -79,7 +79,7 @@
 <p>When deployed to your local IIS or webserver, you should create 2 MSSQL databases with the same structure of the localDbs so that the website then uses a persistant and more robust engine. The connection strings on the <i>appSettings.json</i> file need to be updated to your own reality when deploying.</p>
 
 ### <h3>How to set up the website settings</h3>
-<p><strong>Mandatory: </strong>You need to edit the appsettings.config file by replacing the following placeholders:
+<p><strong>Mandatory: </strong>You need to edit the appsettings.json file by replacing the following placeholders:
   <ul>
     <li>{CreatorName}: Your Paradox username (the one you use in your game);</li>
     <li>{CreatorId}: You can find your CreatorId on your mod folder tipically at <em>'%appdata%\LocalLow\Colossal Order\Cities Skylines II\ModSettings\HallOfFame\HallOfFame.coc'</em>;</li>
