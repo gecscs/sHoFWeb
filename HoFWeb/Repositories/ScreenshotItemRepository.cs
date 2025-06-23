@@ -1,7 +1,6 @@
 using HoFWeb.Data;
 using HoFWeb.Logging;
 using HoFWeb.Models;
-using HoFWeb.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace HoFWeb.Repositories
@@ -11,83 +10,95 @@ namespace HoFWeb.Repositories
         private readonly AppDbContext _context;
         private readonly ILogger<ScreenshotItemRepository> _logger;
         private readonly ICustomLogger _customLogger;
-        public ScreenshotItemRepository(AppDbContext context, ILogger<ScreenshotItemRepository> logger, ICustomLogger customLogger) 
+        public ScreenshotItemRepository(AppDbContext context, ILogger<ScreenshotItemRepository> logger, ICustomLogger customLogger)
         {
             _context = context;
             _logger = logger;
             _customLogger = customLogger;
         }
 
-        public async Task <List<ScreenshotItem>> GetAllScreenshotsAsync()
+        public async Task<List<ScreenshotItem>> GetAllScreenshotsAsync()
         {
             return await _context.Screenshots.ToListAsync();
         }
 
         public async Task AddOrUpdateScreenshotAsync(ScreenshotItem shot, bool scheduled)
         {
-            var s = await _context.Screenshots.FirstOrDefaultAsync(c => c.Id == shot.Id);
 
-            if (!scheduled)
+            try
             {
-                if (s != null)
+                //_customLogger.CustomInfo($"AddOrUpdateScreenshotAsync called with Id: {shot.Id}, Scheduled: {scheduled}");
+
+                var s = await _context.Screenshots.FirstOrDefaultAsync(c => c.Id == shot.Id);
+
+                if (!scheduled)
                 {
-                    s.Favorited = shot.Favorited;
-                    s.FavoritesCount = shot.FavoritesCount;
-                    s.FavoritesPerDay = shot.FavoritesPerDay;
-                    s.FavoritingPercentage = shot.FavoritingPercentage;
-                    s.ViewsCount = shot.ViewsCount;
-                    s.ViewsPerDay = shot.ViewsPerDay;
-                    s.IsReported = shot.IsReported;
-                    s.IsApproved = shot.IsApproved;
+                    if (s != null)
+                    {
+                        s.Favorited = shot.Favorited;
+                        s.FavoritesCount = shot.FavoritesCount;
+                        s.FavoritesPerDay = shot.FavoritesPerDay;
+                        s.FavoritingPercentage = shot.FavoritingPercentage;
+                        s.ViewsCount = shot.ViewsCount;
+                        s.ViewsPerDay = shot.ViewsPerDay;
+                        s.IsReported = shot.IsReported;
+                        s.IsApproved = shot.IsApproved;
+                    }
+                    else
+                    {
+                        // Handle potential duplicate Creator
+                        if (shot.Creator != null)
+                        {
+                            var existingCreator = await _context.Creators.FirstOrDefaultAsync(c => c.Id == shot.Creator.Id);
+                            if (existingCreator != null)
+                            {
+                                // Attach existing Creator (reuse tracked one)
+                                shot.Creator = existingCreator;
+                            }
+                            else
+                            {
+                                // Insert new Creator 
+                                _context.Creators.Add(shot.Creator);
+                            }
+                        }
+
+                        _context.Screenshots.Add(shot);
+                    }
+
+                    await _context.SaveChangesAsync();
                 }
                 else
                 {
-                    // Handle potential duplicate Creator
-                    if (shot.Creator != null)
+                    if (s == null)
                     {
-                        var existingCreator = await _context.Creators.FindAsync(shot.Creator.Id);
-                        if (existingCreator != null)
+                        // Handle potential duplicate Creator
+                        if (shot.Creator != null)
                         {
-                            // Attach existing Creator (reuse tracked one)
-                            shot.Creator = existingCreator;
+                            var existingCreator = await _context.Creators.FindAsync(shot.Creator.Id);
+                            if (existingCreator != null)
+                            {
+                                // Attach existing Creator (reuse tracked one)
+                                shot.Creator = existingCreator;
+                            }
+                            else
+                            {
+                                // Insert new Creator
+                                _context.Creators.Add(shot.Creator);
+                            }
                         }
-                        else
-                        {
-                            // Insert new Creator
-                            _context.Creators.Add(shot.Creator);
-                        }
-                    }
 
-                    _context.Screenshots.Add(shot);
+                        _context.Screenshots.Add(shot);
+                    }
                 }
 
-                await _context.SaveChangesAsync();
             }
-            else
+            catch (Exception ex)
             {
-                if (s == null)
-                {
-                    // Handle potential duplicate Creator
-                    if (shot.Creator != null)
-                    {
-                        var existingCreator = await _context.Creators.FindAsync(shot.Creator.Id);
-                        if (existingCreator != null)
-                        {
-                            // Attach existing Creator (reuse tracked one)
-                            shot.Creator = existingCreator;
-                        }
-                        else
-                        {
-                            // Insert new Creator
-                            _context.Creators.Add(shot.Creator);
-                        }
-                    }
+                _logger.LogError(ex, "Error logging AddOrUpdateScreenshotAsync call");
 
-                    _context.Screenshots.Add(shot);
-                }
-            }
+            }  
 
-            
+
         }
 
         public async Task AddScreenshotDataPointAsync(ScreenshotDataPoint dataPoint)
