@@ -38,7 +38,7 @@ namespace HoFWeb.Repositories
                         s.Favorited = shot.Favorited;
                         s.FavoritesCount = shot.FavoritesCount;
                         s.FavoritesPerDay = shot.FavoritesPerDay;
-                        s.FavoritingPercentage = shot.FavoritingPercentage;
+                        s.FavoritingPercentage = (shot.FavoritingPercentage == double.NaN) ? 0 : shot.FavoritingPercentage;
                         s.ViewsCount = shot.ViewsCount;
                         s.ViewsPerDay = shot.ViewsPerDay;
                         s.IsReported = shot.IsReported;
@@ -95,7 +95,6 @@ namespace HoFWeb.Repositories
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error logging AddOrUpdateScreenshotAsync call");
-
             }  
 
 
