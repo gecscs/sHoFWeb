@@ -377,3 +377,4 @@ FodyWeavers.xsd
 /HoFSimpleJSONReader/wwwroot/data/data.json
 /HoFSimpleJSONReader/wwwroot/data/shots.json
 /HoFSimpleJSONReader/appsettings.Development.json
+/HoFWeb/appsettings.Development.json
