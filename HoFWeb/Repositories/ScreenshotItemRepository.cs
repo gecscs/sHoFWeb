@@ -40,6 +40,7 @@ namespace HoFWeb.Repositories
                         s.FavoritesPerDay = shot.FavoritesPerDay;
                         s.FavoritingPercentage = (shot.FavoritingPercentage == double.NaN) ? 0 : shot.FavoritingPercentage;
                         s.ViewsCount = shot.ViewsCount;
+                        s.UniqueViewsCount = shot.UniqueViewsCount;
                         s.ViewsPerDay = shot.ViewsPerDay;
                         s.IsReported = shot.IsReported;
                         s.IsApproved = shot.IsApproved;

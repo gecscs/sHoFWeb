@@ -35,12 +35,12 @@ namespace HoFWeb.Services
 
                     if (dbShot != null && !scheduled)
                     {
-                        updatedShot.ViewsVariation = updatedShot.ViewsCount - dbShot.ViewsCount;
+                        updatedShot.ViewsVariation = updatedShot.UniqueViewsCount - dbShot.UniqueViewsCount;
                         updatedShot.FavoritesVariation = updatedShot.FavoritesCount - dbShot.FavoritesCount;
                     }
                     else
                     {
-                        updatedShot.ViewsVariation = updatedShot.ViewsCount;
+                        updatedShot.ViewsVariation = updatedShot.UniqueViewsCount;
                         updatedShot.FavoritesVariation = updatedShot.FavoritesCount;
                     }
 
@@ -48,17 +48,18 @@ namespace HoFWeb.Services
                     TimeSpan dateDifferencial = DateTime.UtcNow - updatedShot.CreatedAt;
                     double daysPast = dateDifferencial.TotalDays;
 
-                    if(updatedShot.FavoritesCount == 0 || updatedShot.ViewsCount == 0)
+                    if(updatedShot.FavoritesCount == 0 || updatedShot.ViewsCount == 0 || updatedShot.UniqueViewsCount == 0)
                     {
                         updatedShot.FavoritesPerDay = 0;
                         updatedShot.FavoritingPercentage = 0;
                         updatedShot.ViewsPerDay = 0;
+                        updatedShot.UniqueViewsCount = 0;
                     }
                     else
                     {
                         updatedShot.FavoritesPerDay = (double)updatedShot.FavoritesCount / daysPast;
-                        updatedShot.FavoritingPercentage = (double)updatedShot.FavoritesCount / (double)updatedShot.ViewsCount;
-                        updatedShot.ViewsPerDay = (double)updatedShot.ViewsCount / daysPast;
+                        updatedShot.FavoritingPercentage = (double)updatedShot.FavoritesCount / (double)updatedShot.UniqueViewsCount;
+                        updatedShot.ViewsPerDay = (double)updatedShot.UniqueViewsCount / daysPast;
                     }
 
                     
@@ -71,6 +72,7 @@ namespace HoFWeb.Services
                         ScreenshotScreenshotDataPointId = Guid.NewGuid(),
                         Id = updatedShot.Id,
                         Views = updatedShot.ViewsCount,
+                        UniqueViews = updatedShot.UniqueViewsCount,
                         Favorites = updatedShot.FavoritesCount,
                         CreatedAt = DateTime.UtcNow
                     };
@@ -87,6 +89,7 @@ namespace HoFWeb.Services
         {
             List<ScreenshotDataPoint> dps = await _repo.GetScreenshotDataPointsAsync(id);
             List<CanvasJsDatapoint> viewsCanvasDPs = new List<CanvasJsDatapoint>(); ;
+            List<CanvasJsDatapoint> uniqueViewsCanvasDPs = new List<CanvasJsDatapoint>(); ;
             List<CanvasJsDatapoint> favoritesCanvasDPs = new List<CanvasJsDatapoint>();
 
             if (dps != null)
@@ -94,6 +97,7 @@ namespace HoFWeb.Services
                 foreach (var dp in dps.OrderBy(c => c.CreatedAt))
                 {
                     viewsCanvasDPs.Add(new CanvasJsDatapoint() { x = dp.CreatedAt, y = dp.Views });
+                    uniqueViewsCanvasDPs.Add(new CanvasJsDatapoint() { x = dp.CreatedAt, y = dp.UniqueViews });
                     favoritesCanvasDPs.Add(new CanvasJsDatapoint() { x = dp.CreatedAt, y = dp.Favorites });
                 }
             }
@@ -101,6 +105,7 @@ namespace HoFWeb.Services
             Dictionary<string, List<CanvasJsDatapoint>> dic = new Dictionary<string, List<CanvasJsDatapoint>>()
             {
                 {"views", viewsCanvasDPs},
+                {"uniqueViews", uniqueViewsCanvasDPs},
                 {"favorites", favoritesCanvasDPs}
             };
 

@@ -8,7 +8,7 @@
 {
         <div class="row g-30">
             <div class="col-auto text-start text" style="margin-top:10px;height:30px;">
-                Screenshots: @Model.Stats.ScreenshotsCount | Views: @Model.Stats.ViewsCount | Likes: @Model.Stats.FavoritesCount
+            Screenshots: @Model.Stats.ScreenshotsCount | Views: @Model.Stats.UniqueViewsCount <small>[@Model.Stats.ViewsCount]</small> | Likes: @Model.Stats.FavoritesCount
             </div>
             <div class="col-auto text-end">
                 <form id="orderForm" method="post">
@@ -20,10 +20,10 @@
                                 <option value="mostLiked">Most Liked</option>
                                 <option value="likesDay">Most Likes p/day</option>
                                 <option value="likesPercent">Best Like/View %</option>
-                                <option value="viewsDay">Most Views p/day</option>
+                                <option value="viewsDay">Most Unique Views p/day</option>
                                 <option value="mostViews">Most Views total</option>
                                 <option value="largestVariation">Largest Likes Variation</option>
-                                <option value="largestViewsVariation">Largest Views Variation</option>
+                                <option value="largestViewsVariation">Largest Unique Views Variation</option>
                             </select>
                         </div>
                         <div class="col-auto" style="display:none;">
@@ -43,9 +43,9 @@
         <ul id="screenshots" class="row list-unstyled g-3 gallery">
             @foreach (var item in Model.Shots)
             {
-                <li id="@item.Id" data-variation="@item.FavoritesVariation" data-viewsvariation="@item.ViewsVariation" data-created="@item.CreatedAt.ToString("yyyy-MM-dd HH:mm:sss")" data-favorites="@item.FavoritesCount" data-favoritesday="@item.FavoritesPerDay" data-favoritespercent="@item.FavoritingPercentage" data-viewsday="@item.ViewsPerDay" data-viewstotal="@item.ViewsCount" class="col-md-4">
+                <li id="@item.Id" data-variation="@item.FavoritesVariation" data-viewsvariation="@item.ViewsVariation" data-created="@item.CreatedAt.ToString("yyyy-MM-dd HH:mm:sss")" data-favorites="@item.FavoritesCount" data-favoritesday="@item.FavoritesPerDay" data-favoritespercent="@item.FavoritingPercentage" data-viewsday="@item.ViewsPerDay" data-viewstotal="@item.ViewsCount" data-uniqueviewstotal="@item.UniqueViewsCount" class="col-md-4">
                     <div class="card h-100 shadow-sm">
-                        <a class="img-shot" href="@item.ImageUrlFHD" title="show image in slideshow" data-fancybox="gallery" data-caption="@item.CityName <br /><h2>@item.FavoritesCount / @item.ViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></h2>posted at:  @item.CreatedAtFormatted">
+                        <a class="img-shot" href="@item.ImageUrlFHD" title="show image in slideshow" data-fancybox="gallery" data-caption="@item.CityName <br /><h2>@item.FavoritesCount / @item.UniqueViewsCount <small>[@item.ViewsCount]</small> <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></h2>posted at:  @item.CreatedAtFormatted">
                             <img src="@item.ImageUrlThumbnail" class="card-img-top img-fluid rounded" alt="@item.CityName" />
                         </a>
 
@@ -53,8 +53,8 @@
                             <div class="card-body">
                                 <h5 class="card-title">@item.CityName</h5>
                                 <p class="card-text">
-                                    @* <h2><a class="stats" href="Screenshot/ShotStatistics/@item.Id" target="_blank" title="see image statistics"> @item.FavoritesCount / @item.ViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></a></h2> *@
-                                    <h2> @item.FavoritesCount / @item.ViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></h2>
+                                    @* <h2><a class="stats" href="Screenshot/ShotStatistics/@item.Id" target="_blank" title="see image statistics"> @item.FavoritesCount / @item.UniqueViewsCount <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></a></h2> *@
+                                    <h2> @item.FavoritesCount / @item.UniqueViewsCount <small>[@item.ViewsCount]</small> <small>(@item.FavoritesVariation / @item.ViewsVariation)</small></h2>
                                     @item.CreatedAtFormatted
                                 </p>
                             </div>
@@ -182,7 +182,7 @@
                         break;
                     case "mostViews":
                         $lis.sort(function (a, b) {
-                            return $(b).data('viewstotal') - $(a).data('viewstotal');
+                            return $(b).data('uniqueviewstotal') - $(a).data('uniqueviewstotal');
                         });
                         // Append the sorted LIs back to the UL (this moves them in the DOM)
                         $lis.detach().appendTo($ul);
@@ -246,9 +246,15 @@
             //console.log(data); // JSON expected
 
             let viewsDPs = [];
+            let uniqueViewsDPs = [];
             let favoritesDPs = [];
 
             viewsDPs = data.views.map(item => ({
+                x: new Date(item.x), // Important: Convert ISO string to Date object
+                y: item.y
+            }));
+
+            uniqueViewsDPs = data.uniqueViews.map(item => ({
                 x: new Date(item.x), // Important: Convert ISO string to Date object
                 y: item.y
             }));
@@ -295,6 +301,17 @@
                         color: "#F08080",
                         //yValueFormatString: "#,##0",
                         dataPoints: viewsDPs
+                    },
+                    {
+                        type: "spline",
+                        showInLegend: true,
+                        name: "Unique Views",
+                        markerType: "square",
+                        xValueFormatString: "DD MMM, YYYY HH:mm",
+                        xValueType: "dateTime",
+                        color: "#808080",
+                        //yValueFormatString: "#,##0",
+                        dataPoints: uniqueViewsDPs
                     },
                     {
                         type: "spline",

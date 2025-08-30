@@ -15,6 +15,7 @@ namespace HoFWeb.Models
         public double FavoritesPerDay { get; set; }
         public double FavoritingPercentage { get; set; }
         public int ViewsCount { get; set; }
+        public int UniqueViewsCount { get; set; }
         public double ViewsPerDay { get; set; }
         public string CityName { get; set; }
         public string? CityNameLocale { get; set; }
@@ -48,6 +49,7 @@ namespace HoFWeb.Models
         public string Id { get; set; }
         public int Favorites { get; set; } = 0;
         public int Views { get; set; } = 0;
+        public int UniqueViews { get; set; } = 0;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 
@@ -117,6 +119,7 @@ namespace HoFWeb.Models
         public int AllViewsCount { get; set; }
         public int ScreenshotsCount { get; set; }
         public int ViewsCount { get; set; }
+        public int UniqueViewsCount { get; set; }
         public int FavoritesCount { get; set; }
     }
 
